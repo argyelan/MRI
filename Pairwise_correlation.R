@@ -27,31 +27,26 @@ oldnames <- make.unique(oldnames, sep = ".")
 colnames(dataFile) <- oldnames
 
 dataFile <- data.table(dataFile)
+#meanData <- dataFile[,lapply(.SD, mean)]
 
-meanData <- dataFile[,lapply(.SD, mean)]
+#dataWindow <- 100
 
-#take data file and adjust based on time steps, rows of dataFile, 0-100, 1-101, ...,495-594
-#Then take upper triangular of matrix and keep that as 2D vector so that it can be compared to other windows
+#setwd('/nethome/rkim/Script/Pairwise Correlations/')
+#sapply(paste('pair_corr', 1:(nrow(dataFile) - dataWindow + 1), '.csv', sep = ''), unlink)
 
-dataWindow <- 100
-
-setwd('/nethome/rkim/Script/Pairwise Correlations/')
-sapply(paste('pair_corr', 1:(nrow(dataFile) - windowTemp + 1), '.csv', sep = ''), unlink)
-
-for (i in c(1:(nrow(dataFile) - dataWindow + 1)))
-{
-pair_corr <- cor(dataFile[c(i:(i+dataWindow-1)),]) #Find the pairwise correlation of data
-setwd('/nethome/rkim/Script/Pairwise Correlations/') #work directory where pairwise correlation vectors will be stored
-newPair <- pair_corr[upper.tri(pair_corr)]
-write.table(newPair, file = paste('pair_corr', sprintf('%03d',i), '.csv', sep = ''), row.names = FALSE, col.names = FALSE)
-
-}
+#for (i in c(1:(nrow(dataFile) - dataWindow + 1)))
+#{
+#pair_corr <- cor(dataFile[c(i:(i + dataWindow - 1))]) #Find the pairwise correlation of data
+#setwd('/nethome/rkim/Script/Pairwise Correlations/') #work directory where pairwise correlation vectors will be stored
+#newPair <- pair_corr[upper.tri(pair_corr)]
+#write.table(newPair, file = paste('pair_corr', sprintf('%03d',i), '.csv', sep = ''), row.names = FALSE, col.names = FALSE)
+#}
 #corrplot(pair_corr, method = "circle")
 
-pairNames <- list.files(full.names = FALSE)
-pairFile <- do.call("cbind", lapply(pairNames, read.csv, header = FALSE)) #Create the data file from the csv files
+#pairNames <- list.files(full.names = FALSE)
+#pairFile <- do.call("cbind", lapply(pairNames, read.csv, header = FALSE)) #Create the data file from the csv files
 
-finalCorr <- cor(pairFile)
+#finalCorr <- cor(pairFile)
 
-ind<-seq(2,495,10)
-corrplot(finalCorr[ind,ind], method = "circle")
+#ind <- seq(2,ncol(pairFile),10)
+#corrplot(finalCorr[ind,ind], method = "circle")
