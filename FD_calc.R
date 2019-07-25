@@ -17,7 +17,7 @@ for (data_row in c(2:size_data[1])){ #Exclude the first row
   for (data_col in c(1:size_data[2])){
     delta_x <- prefiltered_func_data_mcf[data_row, data_col] - prefiltered_func_data_mcf[(data_row - 1), data_col]
     if (data_col < 4){
-    delta_x <- delta_x * (50*2*pi)/360
+      delta_x <- delta_x * (50*2*pi)/360
     }
     delta_x <- abs(delta_x)
     FD[data_row] <- FD[data_row] + delta_x
